@@ -26,6 +26,13 @@ export const Navbar = () => {
           <Button
             variant="ghost"
             className="text-white hover:text-primary hover:bg-white"
+            onClick={() => navigate("/students")}
+          >
+            Students
+          </Button>
+          <Button
+            variant="ghost"
+            className="text-white hover:text-primary hover:bg-white"
             onClick={() => navigate("/reports")}
           >
             Reports
