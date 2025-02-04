@@ -1,3 +1,4 @@
+
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
@@ -70,12 +71,16 @@ const Index = () => {
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4">
-          <Input
-            placeholder="Search schools..."
-            className="max-w-xs"
-            type="search"
-            icon={<Search className="h-4 w-4" />}
-          />
+          <div className="relative max-w-xs">
+            <span className="absolute left-2.5 top-2.5 text-gray-500">
+              <Search className="h-4 w-4" />
+            </span>
+            <Input
+              placeholder="Search schools..."
+              className="pl-8"
+              type="search"
+            />
+          </div>
           <div className="flex gap-2">
             <select className="rounded-md border px-3 py-2 text-sm">
               <option>All Years</option>
