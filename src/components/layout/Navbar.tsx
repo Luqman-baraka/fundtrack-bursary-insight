@@ -49,13 +49,6 @@ export const Navbar = () => {
               Students
             </Button>
             <Button
-              variant="ghost"
-              className="text-white hover:text-primary hover:bg-white"
-              onClick={() => navigate("/reports")}
-            >
-              Reports
-            </Button>
-            <Button
               variant="outline"
               className="bg-white text-primary hover:bg-gray-100"
               onClick={() => navigate("/login")}
@@ -97,16 +90,6 @@ export const Navbar = () => {
               }}
             >
               Students
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full text-white hover:text-primary hover:bg-white"
-              onClick={() => {
-                navigate("/reports");
-                setIsMenuOpen(false);
-              }}
-            >
-              Reports
             </Button>
             <Button
               variant="outline"
