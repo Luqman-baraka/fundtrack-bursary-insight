@@ -9,7 +9,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <main className="container mx-auto py-8 px-4 animate-fade-in">
+      <main className="container mx-auto py-4 px-4 lg:py-8 lg:px-6 animate-fade-in">
         {children}
       </main>
     </div>
