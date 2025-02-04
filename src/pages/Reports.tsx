@@ -1,15 +1,8 @@
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import { Download, FileSpreadsheet, FileText } from "lucide-react";
 
 const Reports = () => {
@@ -128,14 +121,14 @@ const Reports = () => {
         <Card className="hover:shadow-lg transition-shadow">
           <CardHeader className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle>Detailed Reports</CardTitle>
-            <div className="flex gap-2">
-              <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
-                <FileSpreadsheet className="h-4 w-4" />
-                Excel
-              </button>
+            <div className="flex flex-wrap gap-2">
               <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
                 <FileText className="h-4 w-4" />
                 PDF
+              </button>
+              <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
+                <FileSpreadsheet className="h-4 w-4" />
+                Excel
               </button>
               <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
                 <Download className="h-4 w-4" />
