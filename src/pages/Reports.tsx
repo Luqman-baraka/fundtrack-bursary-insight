@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Download, FileSpreadsheet, FilePdf } from "lucide-react";
+import { Download, FileSpreadsheet, FileText } from "lucide-react";
 
 const Reports = () => {
   // Mock data for demonstration
@@ -134,7 +134,7 @@ const Reports = () => {
                 Excel
               </button>
               <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
-                <FilePdf className="h-4 w-4" />
+                <FileText className="h-4 w-4" />
                 PDF
               </button>
               <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50">
