@@ -1,9 +1,8 @@
-
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,18 +21,18 @@ const Index = () => {
   ];
 
   const developmentData = [
-    { name: "Well Developed", value: 45, color: "#059669" },
-    { name: "Needs Support", value: 35, color: "#d97706" },
-    { name: "Critical", value: 20, color: "#dc2626" },
+    { name: "Well Developed", value: 45, color: "#059669", description: "Schools meeting or exceeding standards" },
+    { name: "Needs Support", value: 35, color: "#d97706", description: "Schools requiring additional resources" },
+    { name: "Critical", value: 20, color: "#dc2626", description: "Schools needing immediate intervention" },
   ];
 
   const trendData = [
-    { month: "Jan", amount: 2.1 },
-    { month: "Feb", amount: 3.4 },
-    { month: "Mar", amount: 2.8 },
-    { month: "Apr", amount: 4.2 },
-    { month: "May", amount: 3.9 },
-    { month: "Jun", amount: 5.1 },
+    { month: "Jan", amount: 2.1, description: "Fund disbursement in millions (KES)" },
+    { month: "Feb", amount: 3.4, description: "Fund disbursement in millions (KES)" },
+    { month: "Mar", amount: 2.8, description: "Fund disbursement in millions (KES)" },
+    { month: "Apr", amount: 4.2, description: "Fund disbursement in millions (KES)" },
+    { month: "May", amount: 3.9, description: "Fund disbursement in millions (KES)" },
+    { month: "Jun", amount: 5.1, description: "Fund disbursement in millions (KES)" },
   ];
 
   const recentAllocations = [
@@ -69,7 +68,6 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative max-w-xs">
             <span className="absolute left-2.5 top-2.5 text-gray-500">
@@ -95,7 +93,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {stats.map((stat) => (
             <Card
@@ -117,7 +114,6 @@ const Index = () => {
           ))}
         </div>
 
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Card className="p-4">
             <CardHeader>
@@ -135,12 +131,28 @@ const Index = () => {
                       outerRadius={80}
                       paddingAngle={5}
                       dataKey="value"
+                      label={({ name, value }) => `${name}: ${value}%`}
                     >
                       {developmentData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip 
+                      formatter={(value, name, props) => [
+                        `${value}%`, 
+                        props.payload.description
+                      ]}
+                    />
+                    <Legend 
+                      verticalAlign="bottom"
+                      align="center"
+                      layout="vertical"
+                      formatter={(value, entry) => (
+                        <span className="text-xs">
+                          {value}: {entry.payload.description}
+                        </span>
+                      )}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -157,9 +169,27 @@ const Index = () => {
                   <LineChart data={trendData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
+                    <YAxis 
+                      label={{ 
+                        value: 'Amount (KES Millions)', 
+                        angle: -90, 
+                        position: 'insideLeft',
+                        style: { textAnchor: 'middle' }
+                      }}
+                    />
+                    <Tooltip 
+                      formatter={(value) => [`KES ${value}M`, 'Amount']}
+                      labelFormatter={(label) => `Month: ${label}`}
+                    />
+                    <Legend 
+                      verticalAlign="bottom"
+                      height={36}
+                      formatter={() => (
+                        <span className="text-xs">Monthly Fund Disbursement</span>
+                      )}
+                    />
                     <Line
+                      name="Fund Disbursement"
                       type="monotone"
                       dataKey="amount"
                       stroke="#1a365d"
@@ -172,7 +202,6 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* Recent Allocations Table */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Allocations</CardTitle>
