@@ -14,13 +14,15 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Top Navigation for larger screens */}
-      <nav className="bg-primary py-4 px-6 shadow-md sticky top-0 z-50 md:block hidden">
+      {/* Fixed App Name Bar */}
+      <div className="fixed top-0 left-0 right-0 bg-primary h-12 flex items-center justify-center z-50 shadow-md">
+        <h1 className="text-white text-xl font-bold">CDF Monitor</h1>
+      </div>
+
+      {/* Top Navigation for larger screens - now positioned below the fixed app name bar */}
+      <nav className="bg-primary py-4 px-6 shadow-md sticky top-12 z-40 md:block hidden">
         <div className="container mx-auto">
-          <div className="flex items-center justify-between">
-            <h1 className="text-white text-xl font-bold">CDF Monitor</h1>
-            
-            {/* Desktop navigation */}
+          <div className="flex items-center justify-end">
             <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
