@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Navbar } from "@/components/layout/Navbar";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 
 // Mock data - replace with actual API calls
 const mockSchools = [
@@ -78,80 +78,77 @@ const Schools = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Schools</h1>
-          <Button onClick={() => navigate("/schools/new")}>Add New School</Button>
-        </div>
+    <DashboardLayout>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Schools</h1>
+        <Button onClick={() => navigate("/schools/new")}>Add New School</Button>
+      </div>
 
-        <div className="flex gap-4 mb-6">
-          <Input
-            placeholder="Search schools by name or location..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="max-w-sm"
-          />
-          <Select
-            value={statusFilter}
-            onValueChange={setStatusFilter}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <Input
+          placeholder="Search schools by name or location..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-sm"
+        />
+        <Select
+          value={statusFilter}
+          onValueChange={setStatusFilter}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="green">Green (Well Developed)</SelectItem>
+            <SelectItem value="orange">Orange (Needs Support)</SelectItem>
+            <SelectItem value="red">Red (Urgent Attention)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredSchools.map((school) => (
+          <Card
+            key={school.id}
+            className="cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => navigate(`/schools/${school.id}`)}
           >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="green">Green (Well Developed)</SelectItem>
-              <SelectItem value="orange">Orange (Needs Support)</SelectItem>
-              <SelectItem value="red">Red (Urgent Attention)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredSchools.map((school) => (
-            <Card
-              key={school.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={() => navigate(`/schools/${school.id}`)}
-            >
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-xl font-bold">
-                  {school.name}
-                </CardTitle>
-                <Badge
-                  className={`${getStatusColor(
-                    school.status
-                  )} text-white capitalize`}
-                >
-                  {school.status}
-                </Badge>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">
-                    Location: {school.location}
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-xl font-bold">
+                {school.name}
+              </CardTitle>
+              <Badge
+                className={`${getStatusColor(
+                  school.status
+                )} text-white capitalize`}
+              >
+                {school.status}
+              </Badge>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  Location: {school.location}
+                </p>
+                <p className="text-sm font-medium">
+                  Development Score: {school.score}/10
+                </p>
+                <div className="text-sm text-muted-foreground">
+                  <p>Science Labs: {school.labs}</p>
+                  <p>
+                    Tiled Classrooms:{" "}
+                    {school.tiledClassrooms ? "Yes" : "No"}
                   </p>
-                  <p className="text-sm font-medium">
-                    Development Score: {school.score}/10
-                  </p>
-                  <div className="text-sm text-muted-foreground">
-                    <p>Science Labs: {school.labs}</p>
-                    <p>
-                      Tiled Classrooms:{" "}
-                      {school.tiledClassrooms ? "Yes" : "No"}
-                    </p>
-                    <p>Computers: {school.computers}</p>
-                    <p>Library: {school.library ? "Yes" : "No"}</p>
-                  </div>
+                  <p>Computers: {school.computers}</p>
+                  <p>Library: {school.library ? "Yes" : "No"}</p>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </main>
-    </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </DashboardLayout>
   );
 };
 

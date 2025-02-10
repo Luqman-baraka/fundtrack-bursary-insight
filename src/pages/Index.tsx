@@ -120,7 +120,7 @@ const Index = () => {
               <CardTitle>School Development Status</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[300px] w-full">
+              <div className="w-full" style={{ height: '300px', minHeight: '300px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -131,27 +131,30 @@ const Index = () => {
                       outerRadius={80}
                       paddingAngle={5}
                       dataKey="value"
-                      label={({ name, value }) => `${name}: ${value}%`}
                     >
                       {developmentData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
                     <Tooltip 
-                      formatter={(value, name, props) => [
-                        `${value}%`, 
-                        props.payload.description
-                      ]}
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-white p-2 border rounded shadow">
+                              <p className="font-medium">{data.name}</p>
+                              <p>{data.value}%</p>
+                              <p className="text-sm text-gray-600">{data.description}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
                     />
                     <Legend 
                       verticalAlign="bottom"
                       align="center"
                       layout="vertical"
-                      formatter={(value, entry) => (
-                        <span className="text-xs">
-                          {value}: {entry.payload.description}
-                        </span>
-                      )}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -164,7 +167,7 @@ const Index = () => {
               <CardTitle>Fund Disbursement Trends</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[300px] w-full">
+              <div className="w-full" style={{ height: '300px', minHeight: '300px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={trendData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -178,20 +181,24 @@ const Index = () => {
                       }}
                     />
                     <Tooltip 
-                      formatter={(value) => [`KES ${value}M`, 'Amount']}
-                      labelFormatter={(label) => `Month: ${label}`}
+                      content={({ active, payload, label }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-white p-2 border rounded shadow">
+                              <p className="font-medium">Month: {label}</p>
+                              <p>Amount: KES {payload[0].value}M</p>
+                              <p className="text-sm text-gray-600">{payload[0].payload.description}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
                     />
-                    <Legend 
-                      verticalAlign="bottom"
-                      height={36}
-                      formatter={() => (
-                        <span className="text-xs">Monthly Fund Disbursement</span>
-                      )}
-                    />
+                    <Legend />
                     <Line
-                      name="Fund Disbursement"
                       type="monotone"
                       dataKey="amount"
+                      name="Monthly Disbursement"
                       stroke="#1a365d"
                       strokeWidth={2}
                     />
