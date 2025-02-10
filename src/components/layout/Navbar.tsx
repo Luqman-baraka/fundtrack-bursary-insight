@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="bg-primary py-4 px-6 shadow-md">
+    <nav className="bg-primary py-4 px-6 shadow-md sticky top-0 z-50">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <h1 className="text-white text-xl font-bold">CDF Monitor</h1>
